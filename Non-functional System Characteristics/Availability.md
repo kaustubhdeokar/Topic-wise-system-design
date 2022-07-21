@@ -1,0 +1,1 @@
+Amount of time for which the service/infra was accessible. 
