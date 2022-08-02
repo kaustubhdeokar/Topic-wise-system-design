@@ -12,3 +12,10 @@ Resource records -
         bar.example.com. CNAME foo.example.com.
     MX mail server for domain
         educative.io IN MX 10 aspmx2.googlemail.com
+
+Hierarchy from right to left (root server-> top level (.com, .edu) -> authoritative (google.com))
+
+DNS is reliable:
+    Cachine
+    High replication
+    udp protocol.

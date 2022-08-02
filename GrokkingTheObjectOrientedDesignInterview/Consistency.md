@@ -18,6 +18,10 @@ Eventual consistency - The value that is returned does not guarantee that it is 
 
                        Database example: Cassandra.(NoSQL)
 
+Causal consistency - categorizes into dependent and independent events. Dependent operations are called casually-related operations. 
+                     they are carried out in the correct order. 
+
+                     It is used to prevent non-intutive behaviours. 
 
 Sequential consistency - preserves the order specified by each client's program. not the overall order. 
 
