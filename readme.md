@@ -20,3 +20,7 @@ Things to perfect:
 3. Tradeoffs.
 
 Start from the core of the problem. branch outwards. if you hit a point of infeasibility, then resource estimation can be good. 
+
+Additional resources:
+Distributed systems : https://www.educative.io/courses/distributed-systems-practitioners
+
