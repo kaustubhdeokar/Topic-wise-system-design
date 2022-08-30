@@ -17,6 +17,8 @@
     2. MX mail server for domain
         educative.io IN MX 10 aspmx2.googlemail.com
 
+![dns flow](dns.png)
+
 ### Types of Servers in DNS Hierarchy
     Resolver Server
         premise of user's network. uses caching. called local or default servers.
@@ -27,7 +29,7 @@
     
 > Hierarchy from right to left (root server-> top level (.com, .edu) -> authoritative (google.com))
 
-> DNS is reliable:
+> DNS as a distributed system 
     Caching - recently requested resource records.
     High replication
     udp protocol.

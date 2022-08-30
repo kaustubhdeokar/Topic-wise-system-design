@@ -13,4 +13,7 @@ first point of contact after the data center firewall.
 
 ### Types of LBs.
 
-    Global - installed as load balancers as a service, requests can be sent to different data servers. deals with data center failovers/ zonal failovers. 
+    Global server load balancing.
+        distribution of traffic load across multiple regions. 
+    Local load balancing
+        withing a data center.
