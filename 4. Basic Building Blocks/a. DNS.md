@@ -30,6 +30,7 @@
 > Hierarchy from right to left (root server-> top level (.com, .edu) -> authoritative (google.com))
 
 > DNS as a distributed system 
+    avoid being a spof. 
     Caching - recently requested resource records.
     High replication
     udp protocol.

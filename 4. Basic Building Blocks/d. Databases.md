@@ -143,3 +143,65 @@
 
 
 ![quorum of 2](quorumof2.png)
+Picture taken from Martin Kleppmann-Designing Data-Intensive Applications_ The Big Ideas Behind Reliable, Scalable, and Maintainable Systems-O’Reilly Media
+
+## Partitioning
+
+Defn: each piece of data, record or document belongs to exactly one partition.
+also known as **Sharding**.
+
+relational database after a point of time are difficult to fit in one node, split into multiple. 
+but it has proven challenging to provide single node like properties over a distributed database.
+
+moving to nosql can be tried but it is really expensive given the historical codebase and close cohesion.
+
+Hence database paritioning helps us to use multiple nodes, where each node manages some part of the whole data. 
+
+### Types of sharding
+
+1. Vertical 
+Break tables into multiple tables, if joins are to be perform on tables they should be kept in one shard. 
+often the column with large text or blob is split into a different table.
+done manually after stakeholders decision.
+
+2. Horizontal
+
+data just becomes too big and affects read-write latency. 
+splitting the data row-wise.
+
+a. Key based sharding
+sometimes there exists foreign-key bound relationships. here the partitioning is performed along with the same partition key. 
+
+![Key based horizontal sharding](horizontalsharding.png)
+
+b. Hash-based sharding
+different values based on hash function. 
+difficult if a new node is introduced. 
+
+Consistent hashing
+every node given a place on the circle, easy to scale horizontally. 
+increases throughput and improves latency, also easy to add remove nodes.
+
+Zookeeper
+a partitioning management system takes care of mappings in network, each node connects to zookeper. whenever there is a change in partitioning the zookeeper is updated, notifies routing tier about the change. hbase, kafka, solrcloud use this.
+
+
+## Tradeoff
+
+Centralised
+
+Adv:
+easier to maintain, update, take backups. 
+stronger consistency, ACID. 
+Disadv:
+slow down queries, high latency.
+single point of failure.
+
+Decentralised:
+Adv:
+faster, easy access to data from the nearest shard. 
+parallel processing. 
+
+Disadv:
+could require data from multiple tables, takes time.
+joins from multiple tables could take time. measures to keep data consistent. 
