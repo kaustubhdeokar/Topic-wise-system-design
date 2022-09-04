@@ -25,7 +25,7 @@ Reliability - is measured from
         Availability - receives non-error response, without guarantee of reflecting the most recent write. 
         Partition Tolerance - message dropped between networks due to network partition. (THIS IS NOT TO BE ABANDONED.)
 
-        So, IN THE CASE OF partition tolerance, we can either choose consistency or availability. 
+        IN THE CASE OF partition tolerance, we can either choose consistency or availability. 
 
         >> When there is no network partition, there is a trade-off between latency and consistency,
         

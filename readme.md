@@ -16,7 +16,7 @@ Concurrency basics: threads, processes, threading in the language you know. Lock
 Things to perfect:
 
 1. Networking protocols. 
-2. Internal knowledge. 
+2. Internal knowledge of all the databases.
 3. Tradeoffs.
 
 Start from the core of the problem. branch outwards. if you hit a point of infeasibility, then resource estimation can be good. 
