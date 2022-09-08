@@ -24,3 +24,4 @@ Start from the core of the problem. branch outwards. if you hit a point of infea
 Additional resources:
 Distributed systems : https://www.educative.io/courses/distributed-systems-practitioners
 
+WOW: https://github.com/binhnguyennus/awesome-scalability
