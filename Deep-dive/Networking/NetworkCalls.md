@@ -8,7 +8,7 @@ RPC's
 SOAP
     based on SOA (services oriented architecture)
     client and server exchange xml-based data. 
-    works over DCP & HTTP. 
+    works over DCP (DHCP?) & HTTP. 
     heavy payload leads to performance issues in distributed apps.
 
 REST
