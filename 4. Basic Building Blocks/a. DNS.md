@@ -17,7 +17,7 @@
     2. MX mail server for domain
         educative.io IN MX 10 aspmx2.googlemail.com
 
-![dns flow](dns.png)
+![dns flow](res/dns.png)
 
 ### Types of Servers in DNS Hierarchy
     Resolver Server

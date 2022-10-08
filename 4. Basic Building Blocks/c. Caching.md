@@ -27,8 +27,18 @@ it can be rerouted from dns to this server.
         pros: fast, good for write intensive.
         cons: may cause data loss - crash.  
 
-popular caching policy: 
+### Popular Caching policy: 
     least recently used. (LRU)
+    least frquently used (no of hits).
+
+
+problems:
+
+![caching issue](res/caching_issue.png)
+
+a scenario can happen that the cache being read by client2 is STALE, and just has been updated by client1.
+
+the solution could be the cache can be moved out of each the servers and be a separate entity altogether.
 
 problems:
     each time the user doesn't find the data in the cache, it is an extra call to the cache. 

@@ -142,7 +142,7 @@
         (Designing data intensive applications - pg 177.)
 
 
-![quorum of 2](quorumof2.png)
+![quorum of 2](res/quorumof2.png)
 Picture taken from Martin Kleppmann-Designing Data-Intensive Applications_ The Big Ideas Behind Reliable, Scalable, and Maintainable Systems-O’Reilly Media
 
 ## Partitioning
@@ -172,7 +172,7 @@ splitting the data row-wise.
 a. Key based sharding
 sometimes there exists foreign-key bound relationships. here the partitioning is performed along with the same partition key. 
 
-![Key based horizontal sharding](horizontalsharding.png)
+![Key based horizontal sharding](res/horizontalsharding.png)
 
 b. Hash-based sharding
 different values based on hash function. 

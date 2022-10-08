@@ -100,5 +100,3 @@
     Stateless - easily scalable as all nodes are identical. 
             
 
-
-    

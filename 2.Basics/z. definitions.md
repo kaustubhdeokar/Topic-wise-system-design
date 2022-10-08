@@ -1,5 +1,12 @@
+Latency - one whole cycle duration.
+        (eg. a request from client to server and back to client).
+
+throughput - the amount of work that the system can do, if the system is said to have a throughput of 1 gbps, it can tranfer igb of data per second.
+
 Availability - Amount of time for which the service/infra was accessible. 
 
+![availability](res/availability.png)
+![availability](res/availability-2.png)
 
 Reliability - is measured from
         a) mean time between failures. 
@@ -39,3 +46,9 @@ Reliability - is measured from
         In case of network partition (P), system has to choose between availability(A) and consistency(C) but 
         else (E)
         it has to choose between latency(L) and consistency(C)
+
+### Proxy
+
+![proxy](res/proxy.png)
+
+using reverse proxy as a load balancer, security, for ratelimiting.
