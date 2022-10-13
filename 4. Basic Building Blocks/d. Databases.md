@@ -78,6 +78,9 @@
             porting from one no sql to other is a challenge.
         - Tradeoff between consistency and availability in case of failures.
 
+### Time Series database -  
+    Time dependent acitivities, monitoring, stock price changes.
+    ex: influxdb, prometheus
  
 ### Data Replication.
 

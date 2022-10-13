@@ -20,4 +20,8 @@ REST
 GRP
     binary protocol. (message transmission happens in )
     Course: https://www.linkedin.com/learning/building-java-microservices-with-grpc/microservices-with-grpc?autoplay=true&resume=false&u=73045713
-    
+
+**Http**
+
+http 1.0 each request required to have a new tcp connection. 
+

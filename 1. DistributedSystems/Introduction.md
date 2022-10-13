@@ -7,7 +7,7 @@
 ### Assumptions that we make in this course. 
 
     The network is reliable
-    latency is zero - library calls such as grpc, 
+    latency is zero - library calls such as grpc, thrift 
     bandwidth is infinite
     network is secure
     transport cost is zero (transportation of data between two points incurs costs). 

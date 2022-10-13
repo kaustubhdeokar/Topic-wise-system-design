@@ -49,3 +49,8 @@
     this can be solved with virtual nodes - each physical node has multiple locations in the ring.
 
     Ex: Apache cassandra.
+
+### Another way of hashing
+
+rendezvous hashing - for every client - it returns a set of possible servers.
+if a server gets taken down, it requests the next server in it's set of possible servers.

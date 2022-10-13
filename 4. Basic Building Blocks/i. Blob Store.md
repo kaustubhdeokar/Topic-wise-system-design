@@ -1,12 +1,14 @@
-- Storage for unstructure data. 
+-Blob (binary large object)
+- Storage for unstructured data - image/video.
 - used for write once, read many (WORM)
 
+ex: GCS(google cloud storage) Amazon S3, Azure Blob Store.
 
 ### Functional requirements 
 - create a container - container holds many blobs. 
 - put data, get data, delete data, list blobs, delete container, list containers. 
 
-### Non- functional requ.
+### Non- functional req.
 - available , durable - once added stays added.
 - scalability : system capable of handling blobs. 
 - throughput : transferring gb's of data, ensure high data throughput. 
