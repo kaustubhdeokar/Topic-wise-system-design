@@ -1,3 +1,26 @@
+## Introduction.
+- database is a program running on a specific port on a machine. (example mysqld runs on 3306, postgresd runs on 5143).
+- for example, a database server, comfortably handles upto 100 writes per seconds, if it has to deal with 200 writes per second, that we can initially choose vertical scaling as a viable solution to the same process.
+- so the server machine which hosts the database, can be given more memory/ram etc.
+- we can also set up a different server for writing and readings. 
+
+### Sharding
+- dividing the databases into smaller independent databases called as shards. Each shard is a subset of a data. Is done for scalability reasons.
+- Advantages
+  - Faster reads and writes
+  - Increased storage.
+  - higher availability.
+- Disadvantages
+  - operationally complex
+  - cross shard queries are expensive. 
+
+### Partitioning 
+- data within shard is divided further into different partitions. Can be done on the basis of range of keys, values, hashes etc. 
+
+![partitioning vs sharding](res/sharding_vs_partitioning.png)
+
+
+
 ## Types
 
 ### Relational 
