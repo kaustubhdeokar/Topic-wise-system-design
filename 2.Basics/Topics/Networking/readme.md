@@ -33,8 +33,6 @@ difference between transport layer and network layer.
     Application
     Transport - attaches source and destination port.
     Network - attaches source and destination ip address.
-    Data Link 
-    Physical
 
 ### TLS 
     - transport layer security helps in security, maintaining privacy over internet. 

@@ -29,7 +29,8 @@
     Pros:
     - simplicity, robustness, scalability.
     - flexibility 
-        DDL (data definition language allows us to modify schema while other queries are happening & db server is running.)
+        DDL (data definition language allows us to modify   - 
+schema while other queries are happening & db server is running.)
     - redundancy
         eliminates redundancy by normalisation.
     - provide ACID properties (refer 2.Basic/definitions.md)
