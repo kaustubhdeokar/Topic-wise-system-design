@@ -1,0 +1,152 @@
+search indexes - https://developers.google.com/search/blog/2010/06/our-new-search-index-caffeine
+
+
+maven vs gradle
+sql queries
+sql vs nosql
+project db's change output. 
+PKI infra.
+
+Banking System. 
+
+1. Creating acccount for user. 
+2. Read/Viewing account for user. 
+3. Updating account for user. 
+4. Deleting account for the user. 
+
+
+1. Creation of the user account: 
+    CreateUserDto
+    { 
+        username/email
+        password
+        address.. info
+    }
+
+request type : post 
+data: CreateUserDto
+/create/account/v1/{data}
+
+
+2. Reading or viewing of the user account. 
+
+request type:get
+data: -
+/view/account/v1/{username/email}
+
+3. Updating account for user. 
+
+    UserDto
+    {
+        username/email
+        password
+        ..all
+    }
+            
+request type: update
+data: UserDto
+/update/acccount/v1/{data}
+
+4. Delete account for user.
+
+request type: delete
+data: -
+/delete/account/v1/{username} 
+
+
+===============
+
+
+Transfer amount (100) from account 1 to 2:
+
+// user1 - logged in.
+// transfer 100 to user2.
+
+request: post
+    TransactionRequestDto
+    {
+        bank-account-id:
+        bank-name:
+        info:
+    }
+data: TransactionRequestDto
+/transferto/v1/{data}
+
+
+
+
+
+===============
+
+SQL :
+
+to suggest a credit card for user account having balance more than x. 
+
+having string. 
+state of telangana.
+
+select username from useraccount where balance>x;
+
+
+
+
+state is A,B,C
+
+
+A - 5
+B - 10
+
+---
+
+
+t1
+t2
+t1.<col1> == t2.<col2>
+
+-----------
+
+
+
+
+
+Builder Design pattern: 
+ 
+class UserAccount{
+    String fullname;
+    String username;
+    String email;
+    
+    UserAccount(String email, String password){
+    }
+    
+    
+    public UserAccount havingFullName(String fullname){
+        this.fullname = fullname;
+    }
+    
+    
+    
+    
+ }
+ 
+ 
+ //
+ UserAccount usr1 = new UserAccount(email, password).havingUsername(username).havingEmail(email);
+ 
+ 
+    
+ //
+    
+  
+ ======
+ 
+ Gradle / MAven
+  
+  
+
+
+
+
+
+
+
