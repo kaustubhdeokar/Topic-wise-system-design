@@ -40,7 +40,7 @@
 - Time take for each process to complete , in the following constraints (Not using the cache here) plain pessimistic lock vs queue approach
   - We'll explore how the system behaves when handling 100,000 requests for 600 seats distributed across 3 compartments: A, B, and C, each with 200 seats.
 
-  - Pessimistic Locking without Queues:
+- Pessimistic Locking without Queues:
 
     - Each booking request directly accesses the database.
     - 30% of requests encounter conflicts due to locking contention.
@@ -48,10 +48,21 @@
     - A conflict (retry due to locking) adds an additional 10ms per retry.
     - Average retry count for conflicts = 2.
 
-    - Using Queues (One Queue per Compartment):
+      - Total requests: 100,000
+      - Conflicts: 30%
+      - Time : .7 * 100,000 * 5ms + .3 * 100,000 * (5ms+20ms - for retry) = 350,000 + 750,000 ms = ~1000s.
+
+
+- Using Queues (One Queue per Compartment):
 
     - Requests are distributed to 3 queues (A, B, and C) based on the compartment.
     - Each queue processes requests serially, avoiding locking conflicts.
     - Assume processing a request from a queue takes 5ms.
     - Queue workers scale horizontally, allowing concurrent processing of requests across compartments.
 
+        - Queue Setup: We have 20 workers processing 33,333 requests in queue A, b, c.
+        - Average conflict rate: Let’s assume 30% of requests experience conflicts (i.e., the seat is already booked by another request).
+        - Time per request without conflict: 5ms.
+        - Retry time: 10ms for each retry.
+        - Time: 0.7 * 33,333 * 5 + .3 * 33,333 * (5 + 20) = ~367s
+        - on having 20 workers, it takes around 400/20 = 20s.

@@ -63,3 +63,8 @@ Non-contiguous
             - when cpu generates a logical address, the page table maps it to it's correct physical address.
     2. Segmentation
             - non contiguous and variable sized memory is allocated. 
+  
+
+Architecture:
+    Shared-nothing architecture: each update is satisfied by a single node.
+    The intent is to eliminate contention among nodes. They do not share the same memory or storage.
