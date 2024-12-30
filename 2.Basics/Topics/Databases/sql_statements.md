@@ -15,6 +15,10 @@ secondary index means a created index other than the primary key.
 - mysql> select sum(population) from city where state = 'Maharashtra';
 - mysql> select avg(population) from city where state = 'Maharashtra';
 
-> Joins
-- mysql> select a.*, b.* from city a join country b on a.country = b.name where b.continent='Asia';
-    
+
+- Rounding upto 2 places.
+> select round(sum(lat_n),2), round(sum(long_w),2) from station;
+
+> [left join](https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier/description/?envType=study-plan-v2&envId=top-sql-50)
+- select EmployeeUNI.unique_id,Employees.name from Employees left join EmployeeUNI on Employees.id = EmployeeUNI.id;
+
