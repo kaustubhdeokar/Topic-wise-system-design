@@ -1,0 +1,228 @@
+// First, let's define our core domain entities
+public class Vehicle {
+    private final String licensePlate;
+    private final VehicleType type;
+    private final boolean isElectric;
+    private final boolean needsHandicapSpot;
+
+    public Vehicle(String licensePlate, VehicleType type, boolean isElectric, boolean needsHandicapSpot) {
+        this.licensePlate = licensePlate;
+        this.type = type;
+        this.isElectric = isElectric;
+        this.needsHandicapSpot = needsHandicapSpot;
+    }
+
+    // Getters
+    public String getLicensePlate() { return licensePlate; }
+    public VehicleType getType() { return type; }
+    public boolean isElectric() { return isElectric; }
+    public boolean needsHandicapSpot() { return needsHandicapSpot; }
+}
+
+public enum VehicleType {
+    TWO_WHEELER(1),
+    FOUR_WHEELER(2),
+    LARGE_VEHICLE(3);
+
+    private final int spotSizeRequired;
+
+    VehicleType(int spotSizeRequired) {
+        this.spotSizeRequired = spotSizeRequired;
+    }
+
+    public int getSpotSizeRequired() { return spotSizeRequired; }
+}
+
+public class ParkingSpot {
+    private final String id;
+    private final int floor;
+    private final SpotType type;
+    private final Location location;
+    private Vehicle parkedVehicle;
+    private ParkingStatus status;
+
+    public ParkingSpot(String id, int floor, SpotType type, Location location) {
+        this.id = id;
+        this.floor = floor;
+        this.type = type;
+        this.location = location;
+        this.status = ParkingStatus.AVAILABLE;
+    }
+
+    public synchronized boolean canPark(Vehicle vehicle) {
+        if (status != ParkingStatus.AVAILABLE) return false;
+        if (vehicle.needsHandicapSpot() && type != SpotType.HANDICAP) return false;
+        if (vehicle.isElectric() && type != SpotType.ELECTRIC) return false;
+        return vehicle.getType().getSpotSizeRequired() <= type.getSize();
+    }
+
+    public synchronized void parkVehicle(Vehicle vehicle) throws ParkingException {
+        if (!canPark(vehicle)) {
+            throw new ParkingException("Cannot park vehicle in this spot");
+        }
+        parkedVehicle = vehicle;
+        status = ParkingStatus.OCCUPIED;
+    }
+
+    public synchronized Vehicle removeVehicle() {
+        if (status != ParkingStatus.OCCUPIED) {
+            throw new ParkingException("No vehicle parked in this spot");
+        }
+        Vehicle vehicle = parkedVehicle;
+        parkedVehicle = null;
+        status = ParkingStatus.AVAILABLE;
+        return vehicle;
+    }
+}
+
+public class ParkingLot {
+    private static ParkingLot instance;
+    private final List<Level> levels;
+    private final Map<String, ParkingTicket> activeTickets;
+    private final PricingEngine pricingEngine;
+    private final SpotAssignmentStrategy spotStrategy;
+
+    private ParkingLot(ParkingLotConfig config) {
+        this.levels = new ArrayList<>();
+        this.activeTickets = new ConcurrentHashMap<>();
+        this.pricingEngine = new HourlyPricingEngine();
+        this.spotStrategy = new OptimalSpotAssignmentStrategy();
+
+        initializeLevels(config);
+    }
+
+    public static synchronized ParkingLot getInstance(ParkingLotConfig config) {
+        if (instance == null) {
+            instance = new ParkingLot(config);
+        }
+        return instance;
+    }
+
+    public ParkingTicket parkVehicle(Vehicle vehicle, ParkingPreference preference) {
+        // Start a parking transaction
+        ParkingTransaction transaction = new ParkingTransaction(vehicle);
+
+        try {
+            // Find appropriate spot using strategy
+            Optional<ParkingSpot> spot = spotStrategy.findSpot(levels, vehicle, preference);
+
+            if (spot.isEmpty()) {
+                throw new ParkingException("No suitable parking spot available");
+            }
+
+            // Park the vehicle
+            spot.get().parkVehicle(vehicle);
+
+            // Create and store ticket
+            ParkingTicket ticket = new ParkingTicket(
+                UUID.randomUUID().toString(),
+                vehicle,
+                spot.get(),
+                LocalDateTime.now()
+            );
+            activeTickets.put(ticket.getId(), ticket);
+
+            return ticket;
+        } catch (Exception e) {
+            transaction.rollback();
+            throw new ParkingException("Failed to park vehicle: " + e.getMessage());
+        }
+    }
+
+    public Bill unparkVehicle(String ticketId) {
+        ParkingTicket ticket = activeTickets.get(ticketId);
+        if (ticket == null) {
+            throw new ParkingException("Invalid ticket ID");
+        }
+
+        // Remove vehicle from spot
+        ParkingSpot spot = ticket.getSpot();
+        spot.removeVehicle();
+
+        // Calculate parking duration and fee
+        Duration parkingDuration = Duration.between(ticket.getEntryTime(), LocalDateTime.now());
+        double parkingFee = pricingEngine.calculateFee(ticket.getVehicle(), parkingDuration);
+
+        // Remove ticket from active tickets
+        activeTickets.remove(ticketId);
+
+        return new Bill(ticket, parkingFee, parkingDuration);
+    }
+
+    public Optional<ParkingTicket> findVehicle(String licensePlate) {
+        return activeTickets.values().stream()
+            .filter(ticket -> ticket.getVehicle().getLicensePlate().equals(licensePlate))
+            .findFirst();
+    }
+
+    public Map<SpotType, Integer> getAvailabilityStatus() {
+        return levels.stream()
+            .flatMap(level -> level.getSpots().stream())
+            .filter(spot -> spot.getStatus() == ParkingStatus.AVAILABLE)
+            .collect(Collectors.groupingBy(
+                ParkingSpot::getType,
+                Collectors.counting()
+            ))
+            .entrySet().stream()
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                e -> e.getValue().intValue()
+            ));
+    }
+}
+
+public class OptimalSpotAssignmentStrategy implements SpotAssignmentStrategy {
+    @Override
+    public Optional<ParkingSpot> findSpot(List<Level> levels, Vehicle vehicle, ParkingPreference preference) {
+        // Start with base filters for vehicle requirements
+        Stream<ParkingSpot> eligibleSpots = levels.stream()
+            .flatMap(level -> level.getSpots().stream())
+            .filter(spot -> spot.canPark(vehicle));
+
+        // Apply preference-based filters
+        if (preference != null) {
+            switch (preference) {
+                case NEAR_ENTRANCE:
+                    eligibleSpots = eligibleSpots.sorted(
+                        Comparator.comparingInt(spot ->
+                            spot.getLocation().distanceToEntrance())
+                    );
+                    break;
+                case NEAR_ELEVATOR:
+                    eligibleSpots = eligibleSpots.sorted(
+                        Comparator.comparingInt(spot ->
+                            spot.getLocation().distanceToElevator())
+                    );
+                    break;
+                case LOWER_FLOOR:
+                    eligibleSpots = eligibleSpots.sorted(
+                        Comparator.comparingInt(ParkingSpot::getFloor)
+                    );
+                    break;
+            }
+        }
+
+        return eligibleSpots.findFirst();
+    }
+}
+
+public class HourlyPricingEngine implements PricingEngine {
+    private static final Map<VehicleType, Double> HOURLY_RATES = Map.of(
+        VehicleType.TWO_WHEELER, 10.0,
+        VehicleType.FOUR_WHEELER, 20.0,
+        VehicleType.LARGE_VEHICLE, 30.0
+    );
+
+    @Override
+    public double calculateFee(Vehicle vehicle, Duration parkingDuration) {
+        double hours = Math.ceil(parkingDuration.toMinutes() / 60.0);
+        double baseRate = HOURLY_RATES.get(vehicle.getType());
+
+        // Apply special rates for electric vehicles
+        if (vehicle.isElectric()) {
+            baseRate *= 0.8; // 20% discount for electric vehicles
+        }
+
+        return baseRate * hours;
+    }
+}
