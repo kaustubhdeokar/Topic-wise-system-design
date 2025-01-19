@@ -33,3 +33,5 @@ A private IP is something reachable only between the servers of the same network
 load balancers communicates to the web servers 
 
 Copy the pages for consistent hashing, ring hash, sharding. 
+
+TODO = BUILD/CHECK: aws load balancer configuration.

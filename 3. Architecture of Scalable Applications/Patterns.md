@@ -1,15 +1,15 @@
 ## Patterns followed in System design
 
 
-### 1. Command and Query Responsibility Segregation (CQRS) Pattern
+#### 1. Command and Query Responsibility Segregation (CQRS) Pattern
  - Different DB for writes and reads. 
  - https://www.freecodecamp.org/news/design-patterns-for-distributed-systems/
 
-### 2.Phase Commit. 
+#### 2.Phase Commit. 
  - https://medium.com/geekculture/distributed-transactions-two-phase-commit-c82752d69324
  - Use of a transaction coordinator to communicate between two databases to guarantee atomicity.
 
-### SAGA:
+#### SAGA:
 - Data management in microservices.
 - Each service can have it's own db or multiple services can share a database.
 
@@ -51,3 +51,14 @@ Here using SAGA pattern, payment microservice should trigger a failure event whi
 
 #### Difference between SAGA vs 2PC : https://www.baeldung.com/cs/two-phase-commit-vs-saga-pattern
 
+
+### Circuit Breaker
+- Suppose user feed service depends on
+  - recommendation service.
+    - profile service - Profile DB
+  - trending service
+    - post service - Posts DB
+- Suppose their is slow response time for profile db service. This will transcend to recommendation service and thus the feed service. Most connections will time out.
+- Hence if we know that the response time for a service is really slow, we should avoid making a call to the service. 
+- This is circuit breaker.
+- Actuator ? this can help.

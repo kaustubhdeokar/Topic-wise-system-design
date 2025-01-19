@@ -3,15 +3,46 @@
 
 > If there are multiple nodes serving requests, it's possible to have separate caches for each of the machines. if the load balancer randomly distributes requests across the nodes, thus increasing the cache miss. two choices for overcoming this are global cache & distributed caches.
 
-### CDN briefly.
+### Types of cache.
+- Let's start from the first place that we search for a cache
+- Locally - browsers/device - Client side cache - resources (like image, js files, bundles) are saved on the client side once response is received.
+- ISPs - proxy server used by ISPs can also cache the response and serve it.
+- CDN - cache which is geographically nearer to the client.
+  - example: cloudflare, akamai.
+  - CDNs can help in short circuiting network calls to the webserver or further processing that has to be done. improving performance, decreasing costs and compute power.
+  - 
+- Load balancers 
+- Web server.
 
-CDN's are kind of cache that come into picture while serving large amount's of static data. 
-if the system isn't large to serve large amount of data, a separate server can be used for the same. 
-it can be rerouted from dns to this server. 
+
+#### Note:
+Two things can be done in a cdn 
+- proxy
+- - you can point to your original site. in which case cdn will act as a proxy
+- server
+- - you can copy all the files that you need to your cdn in which case in will act as a host
+
+- Whenever a request if received by the client, it contains a Cache-control header.
+- It contains values like
+  - no-cache - cache is not to be used.
+  - max-age - cache is to be used for the time specified.(seconds)
+  - public - cache is to be used by any client.
+  - private - not to be cached by a cdn.
+
+### Cache fetching/updation techniques.
+
+1. Cache-miss - fetch from db - update cache.
+2. Update cache while writing to the db. 
+   - example: for a live score app, it makes sense to update the cache during the score update process, along with the database update. as subsequent reads should happen from the cache which should should request on a very large scale and fast.
+
+### Scaling a cache.
+- Similar to a normal db.
+  - Vertical scaling - increase size of the cache.
+  - Horizontal scaling - increase the number of caches, which act as read replicas
+  - Sharding - increase the number of caches, which holds mutually exclusive data.
 
 ### Cache  invalidation. 
-    
-    if data being modified is present as a cache, techniques to keep the data consistent in the cache and the db. 
+- If data being modified is present as a cache, techniques to keep the data consistent in the cache and the db. 
     1. Write-through cache:
         modified in both places while write time. 
         pros: guarantees consistency, durability if power failure or crash.
