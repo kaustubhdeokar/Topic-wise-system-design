@@ -21,6 +21,12 @@ Reliability - is measured from
         In distributed systems, this means something different, that all the nodes which serve data have the same image of the data. (in same state).
 
         Isolation - transactions executed separately or concurrently and have data dependencies, the result is same.
+                Isolation levels in database
+                - Read uncommitted transactions - One transaction can read uncommitted values of other transaction.
+                - Read committed transactions - One transaction can read committed values of other transaction
+                - Repeatable reads - Once you have read something within the transaction, you will see the same result until that transaction.
+                - Serializable reads - slowest, even read has a lock.
+
 
         Durability - committed stays committed. 
 

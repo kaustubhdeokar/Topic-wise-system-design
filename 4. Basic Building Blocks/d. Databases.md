@@ -205,9 +205,6 @@ b. Hash-based sharding
 different values based on hash function. 
 difficult if a new node is introduced. 
 
-Consistent hashing
-every node given a place on the circle, easy to scale horizontally. 
-increases throughput and improves latency, also easy to add remove nodes.
 
 Zookeeper
 a partitioning management system takes care of mappings in network, each node connects to zookeper. whenever there is a change in partitioning the zookeeper is updated, notifies routing tier about the change. hbase, kafka, solrcloud use this.
