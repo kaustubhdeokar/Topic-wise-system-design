@@ -21,16 +21,16 @@ first point of contact after the data center firewall.
 ### Types of LBs.
 
     Global server load balancing.
-        distribution of traffic load across multiple regions. 
+        distribution of traffic load across multiple regions.
     Local load balancing
         withing a data center.
 
 
 For a load balancer setup, the clients reach the web servers through load balancers. 
-Users connect to the public IPs of load balancers directly. 
+Users connect to the public IPs of load balancers directly.
 
 A private IP is something reachable only between the servers of the same network.
-load balancers communicates to the web servers 
+load balancers communicates to the web servers.
 
 Copy the pages for consistent hashing, ring hash, sharding. 
 

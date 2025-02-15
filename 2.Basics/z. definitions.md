@@ -17,16 +17,17 @@ Reliability - is measured from
         Atomicity - transaction with multiple operations, either all or executed or none are.
         this also extends to distributed systems - with operations executed on multiple nodes.
 
-        Consistency - valid to valid state. 
+        Consistency - valid to valid state.
         In distributed systems, this means something different, that all the nodes which serve data have the same image of the data. (in same state).
+                - achieved with help on constraints, cascades, trigger.
 
-        Isolation - transactions executed separately or concurrently and have data dependencies, the result is same.
+        Isolation - How much details of a transaction x is seen by other transaction y.
+        ![res/repeatable-reads.png](res/repeatable-reads.png)
                 Isolation levels in database
                 - Read uncommitted transactions - One transaction can read uncommitted values of other transaction.
                 - Read committed transactions - One transaction can read committed values of other transaction
-                - Repeatable reads - Once you have read something within the transaction, you will see the same result until that transaction.
+                - Repeatable reads - Once you have read something within the transaction, you will see the same result until that transaction.(DEFAULT)
                 - Serializable reads - slowest, even read has a lock.
-
 
         Durability - committed stays committed. 
 

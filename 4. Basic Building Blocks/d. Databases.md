@@ -5,27 +5,17 @@
 - we can also set up a different server for writing and readings. 
 
 ### Sharding
-- dividing the databases into smaller independent databases called as shards. Each shard is a subset of a data. Is done for scalability reasons.
-- Advantages
-  - Faster reads and writes
-  - Increased storage.
-  - higher availability.
-- Disadvantages
-  - operationally complex
-  - cross shard queries are expensive. 
-
+- a shard is a database instance.
+* a database is sharded.
 ### Partitioning 
-- data within shard is divided further into different partitions. Can be done on the basis of range of keys, values, hashes etc. 
+- data when split into different shards or on the same shard - is partitioning.
+* data is partitioned.
 
 ![partitioning vs sharding](res/sharding_vs_partitioning.png)
 
-
-
 ## Types
-
 ### Relational 
     - prior structure.
-    
     Pros:
     - simplicity, robustness, scalability.
     - flexibility 
@@ -45,7 +35,8 @@ schema while other queries are happening & db server is running.)
 ### Non-relational  
 
     - unstructured/semi-structured.
-    
+    - most offer out of the box sharding. (how?)
+    - most offer partial updates. you don't have to read the whole thing.     
     Pros: 
     Simple Design:
         - (no impedence mismatch) - refer cons of sql db's.
@@ -105,7 +96,17 @@ schema while other queries are happening & db server is running.)
 ### Time Series database -  
     Time dependent acitivities, monitoring, stock price changes.
     ex: influxdb, prometheus
- 
+
+- how to pick a database.
+  - fits on one node & strong consistency - SQL
+    - complex queries , aggregations - SQL
+    - KV based access - fast - redis dynamo
+    - advanced dsa - redis (bloom filters)
+  - if it cannot fit on one node
+    - if can do manual sharding - drop constraints and go for relational db.
+    - nothing specific - no expertise in sql ^& future proof - nosql document db or else.
+
+
 ### Data Replication.
 
     keep multiple copies of data most likely geographically distributed.
