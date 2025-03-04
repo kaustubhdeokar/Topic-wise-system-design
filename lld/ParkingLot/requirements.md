@@ -1,7 +1,5 @@
 https://github.com/ashishps1/awesome-low-level-design/tree/main/solutions/java/src/parkinglot
 
-
-
 - The parking lot should have multiple floors where customers can park their cars.
 - The parking lot should have multiple entry and exit points.
 - Customers can collect a parking ticket from the entry points and can pay the parking fee at the exit points to the parking attendant or automated exit panel
